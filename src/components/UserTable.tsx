@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useTable, Column } from 'react-table'
-import sampleData from '../sampledata.json';
+import { useFetch } from 'react-async';
 
 const Styles = styled.div`
   padding: 1rem;
@@ -32,7 +32,7 @@ const Styles = styled.div`
   }
 `
 
-function Table({ columns, data }: {columns: Column<object>[], data: object[] }) {
+function Table({ columns, data }: { columns: Column<object>[], data: object[] }) {
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
@@ -74,6 +74,9 @@ function Table({ columns, data }: {columns: Column<object>[], data: object[] }) 
 }
 
 function UserTable() {
+  const url = 'https://raw.githubusercontent.com/fresh8gaming/fullstack-coding-exercise/trunk/sampledata.json'
+  const headers = { Accept: "application/json" }
+  const { data, error, isPending } = useFetch(url, { headers });
   const columns = React.useMemo(
     () => [
       {
@@ -92,16 +95,17 @@ function UserTable() {
     []
   )
 
-  const data = React.useMemo(() => (
-  sampleData), [])
+  if (isPending) return <div>Loading ...</div>
+  if (error) return <div>Something went wrong: {error.message} {JSON.stringify(error)}</div>
+  if (data) {
+    return (
+      <Styles>
+        <Table columns={columns} data={data as object[]} />
+      </Styles>
+    )
+  }
 
-  return (
-    <>
-    <Styles>
-      <Table columns={columns} data={data} />
-    </Styles>
-    </>
-  )
+  return <div>Loading ... Something went wrong</div>
 }
 
 export default UserTable
