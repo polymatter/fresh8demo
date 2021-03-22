@@ -7,13 +7,6 @@ jest.mock('node-fetch', () => jest.fn());
 
 describe('UserTable', () => {
 
-  beforeEach(() => {
-    // global.fetch = jest.fn().mockImplementation(() => (
-    //   Promise.resolve({ json: () => Promise.resolve([])})
-    // )
-    // jest.mock()
-  });
-
   test('can see all the registered users in the system & each user has a name, email and location', async () => {
     render(<App />);
     await waitForElementToBeRemoved(() => screen.getByText(/loading/i));

@@ -74,7 +74,7 @@ function Table({ columns, data }: { columns: Column<object>[], data: object[] })
 }
 
 function UserTable() {
-  const url = 'https://raw.githubusercontent.com/fresh8gaming/fullstack-coding-exercise/trunk/sampledata.json'
+  const url = 'http://localhost:4000/api/users.json'
   const headers = { Accept: "application/json" }
   const { data, error, isPending } = useFetch(url, { headers });
   const columns = React.useMemo(
