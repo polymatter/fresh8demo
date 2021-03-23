@@ -59,7 +59,7 @@ function Table({ columns, data }: { columns: Column<User>[], data: User[] }) {
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column, index) => (
               <th {...column.getHeaderProps()}>{column.render('Header')}
-                { index === 0 && <><br /><input type="text" value={filter} onChange={e => setFilter(e.target.value)} /></>}
+                { index === 0 && <><br /><input data-testid="filter" type="text" value={filter} onChange={e => setFilter(e.target.value)} /></>}
               </th>
             ))}
           </tr>
